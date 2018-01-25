@@ -28,9 +28,6 @@ void MainWindow::errorString(QString err){
 
 void MainWindow::stdoutevent(){
   qDebug("stdout signal recived");
-//  QMessageBox msgBox;
-//  msgBox.setText("The document has been modified.");
-//  msgBox.exec();
 }
 
 void MainWindow::on_connectBtn_clicked()
