@@ -12,8 +12,8 @@ namespace freerdpgui {
     Q_OBJECT
   public:
     XFreeRDP(QString hostname, QString username, QObject * parent);
+    ~XFreeRDP();
 
-    void Connect(void);
     QObject * parent_;
     QProcess * process;
     QString hostname(void){ return hostname_;}
@@ -22,6 +22,12 @@ namespace freerdpgui {
 
   public slots:
     void readFromStdout();
+    void Connect();
+
+  signals:
+    void finished();
+    void error(QString err);
+    void certificateQuestion();
 
   private:
     QString hostname_, username_, password_;

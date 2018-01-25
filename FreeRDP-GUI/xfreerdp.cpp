@@ -13,6 +13,8 @@ freerdpgui::XFreeRDP::XFreeRDP(QString hostname, QString username, QObject *pare
 
 }
 
+freerdpgui::XFreeRDP::~XFreeRDP(){}
+
 void freerdpgui::XFreeRDP::Connect(void)
 {
   QString u,p,v;
@@ -31,9 +33,10 @@ void freerdpgui::XFreeRDP::Connect(void)
 
   connect( process, SIGNAL(readyReadStandardOutput()), this, SLOT(readFromStdout()));
   connect( process, SIGNAL(readyReadStandardError()), this, SLOT(readFromStdout()));
-  process->startDetached("xfreerdp", arguments_);
-  process->waitForFinished(10000);
-  delete process;
+  process->start("xfreerdp", arguments_);
+  process->waitForFinished(-1);
+
+  emit finished();
 }
 
 void freerdpgui::XFreeRDP::readFromStdout()

@@ -3,6 +3,7 @@
 
 #include "xfreerdp.h"
 #include <QDebug>
+#include <QThread>
 
 #include <iostream>
 
@@ -26,14 +27,21 @@ void MainWindow::on_connectBtn_clicked()
 {/*
   freerdpgui::XFreeRDP rdp_connection  freerdpgui::XFreeRDP::XFreeRDP(ui->lineEditServer->text(),
                                                                        ui->lineEditUsername->text());*/
+  QThread * thread = new QThread;
+  freerdpgui::XFreeRDP * rdp_connection = new freerdpgui::XFreeRDP(ui->lineEditServer->text(), ui->lineEditUsername->text(), this);
+  rdp_connection->set_password(ui->lineEditPassword->text());
 
-  freerdpgui::XFreeRDP rdp_connection(ui->lineEditServer->text(), ui->lineEditUsername->text(), this);
-  rdp_connection.set_password(ui->lineEditPassword->text());
-  try{
-    rdp_connection.Connect();
-  }
-  catch(std::runtime_error e){
-    std::cerr << e.what() << "\n";
-  }
+  rdp_connection->moveToThread(thread);
+  connect(rdp_connection, SIGNAL(error(QString)), this, SLOT(errorString(QString)));
+  connect(thread, SIGNAL(started()), rdp_connection, SLOT(Connect()));
+  connect(rdp_connection, SIGNAL(finished()), thread, SLOT(quit()));
+  thread->start();
+
+//  try{
+//    rdp_connection.Connect();
+//  }
+//  catch(std::runtime_error e){
+//    std::cerr << e.what() << "\n";
+//  }
 
 }
