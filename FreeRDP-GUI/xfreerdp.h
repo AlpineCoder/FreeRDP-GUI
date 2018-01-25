@@ -25,6 +25,7 @@ namespace freerdpgui {
     void Connect();
 
   signals:
+    void stdoutevent();
     void finished();
     void error(QString err);
     void certificateQuestion();

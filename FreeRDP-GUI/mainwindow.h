@@ -18,6 +18,10 @@ public:
 private slots:
     void on_connectBtn_clicked();
 
+public slots:
+    void errorString(QString err);
+    void stdoutevent();
+
 private:
     Ui::MainWindow *ui;
 

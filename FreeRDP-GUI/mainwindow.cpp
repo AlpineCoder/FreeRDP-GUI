@@ -4,6 +4,7 @@
 #include "xfreerdp.h"
 #include <QDebug>
 #include <QThread>
+#include <QMessageBox>
 
 #include <iostream>
 
@@ -21,7 +22,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::errorString(QString err){
 
+}
+
+void MainWindow::stdoutevent(){
+  qDebug("stdout signal recived");
+//  QMessageBox msgBox;
+//  msgBox.setText("The document has been modified.");
+//  msgBox.exec();
+}
 
 void MainWindow::on_connectBtn_clicked()
 {/*
@@ -35,6 +45,8 @@ void MainWindow::on_connectBtn_clicked()
   connect(rdp_connection, SIGNAL(error(QString)), this, SLOT(errorString(QString)));
   connect(thread, SIGNAL(started()), rdp_connection, SLOT(Connect()));
   connect(rdp_connection, SIGNAL(finished()), thread, SLOT(quit()));
+  connect(rdp_connection, SIGNAL(finished()), thread, SLOT(deleteLater()));
+  connect(rdp_connection, SIGNAL(stdoutevent()), this, SLOT(stdoutevent()));
   thread->start();
 
 //  try{
