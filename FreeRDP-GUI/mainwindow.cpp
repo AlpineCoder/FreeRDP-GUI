@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->lineEditServer->setText("192.168.192.28");
+    ui->lineEditServer->setText("zack.home.local");
     ui->lineEditUsername->setText("Administrator");
 }
 

@@ -25,6 +25,7 @@ void freerdpgui::XFreeRDP::Connect(void)
   arguments_ << p;
   arguments_ << v;
   arguments_ << "/dynamic-resolution";
+  arguments_ << "/scale-desktop:400";
   // Accept certificates for now until I found a way to let
   // the user decide.
   arguments_ << "/cert-tofu";
